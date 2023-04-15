@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <h1>文章管理模块</h1>
 
     <div>
@@ -42,7 +42,7 @@
     
         <template #footer>
             <div>
-                <el-button type="primary">确定</el-button>
+                <el-button type="primary" @click="deleteArticle2">确定</el-button>
                 <el-button type="info" @click="deleteVisible = false">取消</el-button>
             </div>
         </template>
@@ -55,7 +55,8 @@
 <script setup>
 import { parseTime } from "../../utils/ruoyi";
 import { onMounted, ref } from "vue";
-import { getArticles } from "@/api/article";
+import { getArticles, deleteArticle } from "@/api/article";
+import { ElMessage } from "element-plus";
 
 const defaultArticleValue = {
   content: "",
@@ -72,9 +73,14 @@ const form = ref(defaultArticleValue);
 const deleteVisible = ref(false)
 
 onMounted(async () => {
+  fetchData()
+});
+
+async function fetchData() {
+
   const res = await getArticles();
   articleData.value = res.data;
-});
+}
 
 function confirmDelete(item) {
     form.value = item;
@@ -82,8 +88,24 @@ function confirmDelete(item) {
     deleteVisible.value = true;
 }
 
+async function deleteArticle2() {
+  const arr = []
+  arr.push(form.value.id)
+   const res = await deleteArticle(arr);
+   ElMessage({
+    type: 'success',
+    message: '操作成功'
+   })
+   deleteVisible.value = false;
+   form.value = defaultArticleValue
+   fetchData()
+}
+
 const integralData = ref([]);
 </script>
 
 <style>
+.app-container {
+  padding: 12px;
+}
 </style>

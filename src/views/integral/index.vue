@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <h1>积分商品管理</h1>
     <el-button @click="openAdd" type="primary">添加 +</el-button>
 
@@ -32,7 +32,7 @@
       </el-table>
     </div>
 
-    <el-dialog
+    <el-dialog 
       class="delete-visible"
       title="确定要删除这条数据吗？"
       v-model="deleteVisible"
@@ -40,21 +40,18 @@
       <template #footer>
         <div>
           <el-button type="info" @click="deleteVisible = false">取消</el-button>
-          <el-button type="primary" @click="deleteIntegralGood">确定</el-button>
+          <el-button type="primary" @click="deleteIntegralGood2">确定</el-button>
         </div>
       </template>
     </el-dialog>
 
-    <el-dialog v-model="editVisible" title="编辑积分商品">
+    <el-dialog width="80vw" v-model="editVisible" title="编辑积分商品">
       <el-form :model="form">
         <el-form-item label="商品名称">
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="商品图片">
-          <!-- <el-image v-show="form.banners.length > 0" /> -->
-          <!-- <div class="upload" v-show="form.banners.length <= 0">
-          <el-input type="file" @input="uploadBanner" />
-        </div> -->
+         
           <el-upload
             class="banner-uploader"
             action="http://127.0.0.1:8899/api/upload"
@@ -97,10 +94,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { getIntegralGoodList, uploadIntegralGood, updateGoodInfo } from "@/api/integral";
+import { getIntegralGoodList, uploadIntegralGood, updateGoodInfo, deleteIntegralGood } from "@/api/integral";
 import { upload } from "@/api/upload";
 import useUploadFile from '@/mixins/useUploadFile'
 
+import "md-editor-v3/lib/style.css";
 import MdEditor from "md-editor-v3";
 const {onUploadImg}  = useUploadFile();
 
@@ -139,17 +137,12 @@ function confirmDelete(item) {
   deleteVisible.value = true;
 }
 
-function deleteIntegralGood() {
-  deleteVisible.value = false;
-}
-
 function resetForm() {
   isAdd.value = true;
   form.value = defaultData;
 }
 
 async function uploadBanner(e) {
-  console.log(e);
   const formData = new FormData();
   formData.append("file", e.raw);
   const res = await upload(formData);
@@ -201,9 +194,26 @@ const beforeAvatarUpload = (rawFile) => {
 function handleChange(e) {
   console.log(e);
 }
+
+async function deleteIntegralGood2() {
+  const arr =[];
+  arr.push(form.value.id)
+  // console.log(form.value.id, "adsadsad");
+  const res = await deleteIntegralGood(arr)
+  ElMessage({
+    type: 'success',
+    message: '操作成功'
+  })
+  deleteVisible.value = false;
+  fetchData()
+}
 </script>
 
 <style lang="scss" scoped>
+
+.app-container {
+  padding: 12px;
+}
 .banner-uploader {
   width: 88px;
   height: 88px;

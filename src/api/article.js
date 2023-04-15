@@ -11,9 +11,13 @@ export function getArticles() {
     })
 }
 
-export function deleteArticle(id) {
+export function deleteArticle(ids) {
     return request({
+        headers: {
+            isToken: false
+        },
         method: 'delete',
-        url: `/api/article/${id}/`
+        url: `/api/article/`,
+        data: ids
     })
 }

@@ -23,10 +23,11 @@ export function getIntegralGoodList(queryString) {
 
 
 // 删除商品
-export function deleteIntegralGood(id) {
+export function deleteIntegralGood(ids) {
     return request({
-        url: `/api/integral/${id}/`,
-        method: 'delete'
+        url: `/api/integral/`,
+        method: 'delete',
+        data: ids
     })
 }
 

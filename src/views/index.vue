@@ -1,16 +1,16 @@
 <template>
   <div class="app-container home">
+    <!-- <img src="../assets/images/bg.jpg"/> -->
+
     <el-row :gutter="20">
       <el-col :sm="24" :lg="24">
-        
-
-        <hr />
+        <h1>
+          欢迎进入智能垃圾管理系统！
+        </h1>
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" style="padding-left: 20px">
-        
-      </el-col>
+      <el-col :sm="24" :lg="12" style="padding-left: 20px"> </el-col>
 
       <el-col :sm="24" :lg="12" style="padding-left: 50px">
         <el-row>
@@ -35,11 +35,11 @@
             <h4>前端技术</h4>
             <ul>
               <li>Vue</li>
-              <li>Vuex</li>
-              <li>Element-ui</li>
+              <li>Pinal</li>
+              <li>Element-plus</li>
               <li>Axios</li>
               <li>Sass</li>
-              <li>Quill</li>
+              <li>MdEditor</li>
               <li>...</li>
             </ul>
           </el-col>
@@ -47,19 +47,21 @@
       </el-col>
     </el-row>
     <el-divider />
-    
   </div>
 </template>
 
 <script setup name="Index">
-
 function goTarget(url) {
-  window.open(url, '__blank')
+  window.open(url, "__blank");
 }
 </script>
 
 <style scoped lang="scss">
 .home {
+  height: 500px;
+  background-image: url("../assets/images/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   blockquote {
     padding: 10px 20px;
     margin: 0 0 20px;

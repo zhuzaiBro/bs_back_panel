@@ -90,6 +90,9 @@ function submitEdit() {
 </script>
 
 <style lang="scss" scoped>
+.member-container {
+  padding: 12px;
+}
 .u-info {
   display: flex;
   width: 100px;
